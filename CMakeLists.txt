@@ -16,7 +16,7 @@ include_directories(include)
 find_package(pugixml CONFIG REQUIRED)
 find_package(libzip CONFIG REQUIRED)
 
-add_executable(parsing src/main.cpp src/file.cpp src/help.cpp src/parse.cpp src/trail.cpp src/marker.cpp)
+add_executable(parsing src/main.cpp src/file.cpp src/help.cpp src/parse.cpp src/trail.cpp src/marker.cpp src/archive.cpp)
 set_property(TARGET parsing PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 set_property(TARGET parsing PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Release>:>")
 target_link_libraries(parsing libzip::zip pugixml::static pugixml::pugixml)

@@ -1,45 +1,42 @@
+#include "archive.hpp"
+#include "point.hpp"
+#include "trail.hpp"
 #include <format>
-#include <iostream>
 #include <help.hpp>
+#include <iostream>
 #include <marker.hpp>
 #include <parse.hpp>
+#include <string>
 
-void trail(char path[])
+void taco(char path[])
 {
-    FileParser<Trail> parser(path);
-    parser.parse_file();
-    auto trails = parser.get_data();
-    int count = 0;
-    for (auto &trail_section : trails) {
-        auto points = trail_section.get_points();
-        for (auto &point : points) {
-            std::cout << "(" << std::format("{}", point.x) << "; "
-                      << std::format("{}", point.y) << "; "
-                      << std::format("{}", point.z) << ")" << std::endl;
-            ++count;
+    ArchiveReader ar(path);
+    auto files = ar.get_files();
+    for (auto &file : files) {
+        if (file.file_name.find("trl") != std::string::npos) {
+            StringParser<Trail> sp(file);
+            sp.parse_content();
+            std::vector<Trail> data = sp.get_data();
+            for (Trail &d : data) {
+                for (Point3D &point : d.get_points()) {
+                    std::cout << "(" << std::format("{}", point.x) << "; "
+                              << std::format("{}", point.y) << "; "
+                              << std::format("{}", point.z) << ")" << std::endl;
+                }
+            }
+        } else if (file.file_name.find("xml") != std::string::npos) {
+            StringParser<Marker> sp(file);
+            sp.parse_content();
+            std::vector<Marker> data = sp.get_data();
+            for (Marker &d : data) {
+                for (Point3D &point : d.get_points()) {
+                    std::cout << "(" << std::format("{}", point.x) << "; "
+                              << std::format("{}", point.y) << "; "
+                              << std::format("{}", point.z) << ")" << std::endl;
+                }
+            }
         }
-        std::cout << "===========================" << std::endl;
     }
-    std::cout << "found " << count << " points" << std::endl;
-}
-
-void marker(char path[])
-{
-    FileParser<Marker> parser(path);
-    parser.parse_file();
-    auto markers = parser.get_data();
-    int count = 0;
-    for (auto &trail_section : markers) {
-        auto points = trail_section.get_points();
-        for (auto &point : points) {
-            std::cout << "(" << std::format("{}", point.x) << "; "
-                      << std::format("{}", point.y) << "; "
-                      << std::format("{}", point.z) << ")" << std::endl;
-            ++count;
-        }
-        std::cout << "===========================" << std::endl;
-    }
-    std::cout << "found " << count << " points" << std::endl;
 }
 
 int main(int ac, char *av[])
@@ -47,9 +44,7 @@ int main(int ac, char *av[])
     if (ac != 3) {
         help();
     }
-    if (!strcmp(av[1], "--trail")) {
-        trail(av[2]);
-    } else if (!strcmp(av[1], "--marker")) {
-        marker(av[2]);
+    if (!strcmp(av[1], "--taco")) {
+        taco(av[2]);
     }
 }

@@ -8,10 +8,6 @@
 
 ## Usage
 
-To parse .trl files:
+To parse .taco files:
 
-`parser.exe --trail <path>`
-
-To parse .xml files:
-
-`parser.exe --marker <path>`
+`parser.exe --taco <path>`
