@@ -5,7 +5,10 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(VCPKG_TARGET_TRIPLET "x64-windows-static")
 set(CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_LIST_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake"
         CACHE STRING "Vcpkg toolchain file")
-
+if (NOT CMAKE_BUILD_TYPE)
+        set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type configuration" FORCE)
+  message(STATUS "Setting default build type: ${CMAKE_BUILD_TYPE}")
+endif() 
 project(parsing)
 
 include_directories(include)
