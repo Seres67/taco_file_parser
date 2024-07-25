@@ -25,9 +25,8 @@ template <> bool FileParser<Trail>::parse_file()
         float x = m_reader.read_float();
         float z = m_reader.read_float();
         float y = m_reader.read_float();
-        if (x == 0 && y == 0 && z == 0) {
+        if (x == 0 && y == 0 && z == 0)
             m_data.emplace_back();
-        }
         m_data.back().add_point({m_map_id, x, y, z});
     }
     return true;
@@ -38,8 +37,11 @@ template <> bool FileParser<Marker>::parse_file()
     m_data.emplace_back();
     pugi::xml_document doc;
     pugi::xml_parse_result r = doc.load(m_reader.get_file());
-    pugi::xml_node content = doc.child("OverlayData").child("POIs");
-    for (auto &poi : content) {
+    pugi::xml_node category = doc.child("OverlayData").child("MarkerCategory");
+    auto name = category.child("MarkerCategory").attribute("DisplayName");
+    std::cout << "parsing " << name.value() << std::endl;
+    pugi::xml_node pois = doc.child("OverlayData").child("POIs");
+    for (auto &poi : pois) {
         if (strcmp(poi.name(), "POI"))
             continue;
         float x = poi.attribute("xpos").as_float();

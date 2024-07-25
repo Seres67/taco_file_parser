@@ -2,6 +2,7 @@
 #define TACO_PARSING_MARKER_HPP
 
 #include <point.hpp>
+#include <string>
 #include <vector>
 
 class Marker
@@ -13,6 +14,7 @@ class Marker
 
   private:
     std::vector<Point3D> m_points;
+    std::string m_name;
 };
 
 #endif // !TACO_PARSING_MARKER_HPP

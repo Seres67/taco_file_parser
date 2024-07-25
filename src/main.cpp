@@ -1,9 +1,7 @@
-#include "marker.hpp"
-#include <algorithm>
-#include <cstring>
 #include <format>
-#include <help.hpp>
 #include <iostream>
+#include <help.hpp>
+#include <marker.hpp>
 #include <parse.hpp>
 
 void trail(char path[])
@@ -14,8 +12,6 @@ void trail(char path[])
     int count = 0;
     for (auto &trail_section : trails) {
         auto points = trail_section.get_points();
-        std::sort(points.begin(), points.end(),
-                  [](auto a, auto b) { return a.x > b.x; });
         for (auto &point : points) {
             std::cout << "(" << std::format("{}", point.x) << "; "
                       << std::format("{}", point.y) << "; "
@@ -35,8 +31,6 @@ void marker(char path[])
     int count = 0;
     for (auto &trail_section : markers) {
         auto points = trail_section.get_points();
-        std::sort(points.begin(), points.end(),
-                  [](auto a, auto b) { return a.x > b.x; });
         for (auto &point : points) {
             std::cout << "(" << std::format("{}", point.x) << "; "
                       << std::format("{}", point.y) << "; "

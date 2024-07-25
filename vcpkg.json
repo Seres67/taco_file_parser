@@ -1,0 +1,12 @@
+{
+  "name" : "parsing",
+  "version-string" : "1.0.0",
+  "builtin-baseline" : "6062c8fe02d38b10d5291411bc235ae4d02cfe6c",
+  "dependencies" : [ {
+    "name" : "libzip",
+    "version>=" : "1.10.1"
+  }, {
+    "name" : "pugixml",
+    "version>=" : "1.14"
+  } ]
+}
