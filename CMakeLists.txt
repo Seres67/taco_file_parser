@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.18)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-
+set(VCPKG_TARGET_TRIPLET "x64-windows-static")
 project(parsing)
 
 include_directories(include)
