@@ -4,8 +4,7 @@
 
 ## Building
 
-`vcpkg install --triplet=x64-windows-static && cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE="%VCPKG_ROOT%\scripts\buildsystems\vcpkg.cmake"
-`
+`mkdir build && cd build && vcpkg install --triplet=x64-windows-static && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE="%VCPKG_ROOT%\scripts\buildsystems\vcpkg.cmake" -G "Ninja" .. && cmake --build .`
 
 ## Usage
 
