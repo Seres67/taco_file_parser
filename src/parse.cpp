@@ -43,7 +43,8 @@ template <> bool StringParser<Marker>::parse_content()
     pugi::xml_node creator = data.child("MarkerCategory");
     pugi::xml_node markers_infos = data.child("MarkerCategory");
     std::string creator_name = creator.attribute("DisplayName").as_string();
-    std::string name = markers_infos.attribute("DisplayName").as_string();
+    std::string marker_name =
+        markers_infos.attribute("DisplayName").as_string();
 
     float scale;
     std::string iconFile;
@@ -65,7 +66,8 @@ template <> bool StringParser<Marker>::parse_content()
             float y = poi.attribute("ypos").as_float();
             float z = poi.attribute("zpos").as_float();
             int mapid = poi.attribute("MapID").as_int();
-            m_data.back().add_point({mapid, x, y, z});
+            std::string type = poi.attribute("type").as_int();
+            m_data.back().add_point({mapid, x, y, z, type});
         } else if (!strcmp(poi.name(), "Trail")) {
         }
     }

@@ -1,10 +1,17 @@
+#include "point.hpp"
 #include <marker.hpp>
 
-Marker::Marker(const std::string &icon_path, float icon_scale)
-    : m_icon_path(icon_path), m_icon_scale(icon_scale)
+Marker::Marker() {}
+
+void Marker::add_point(const POI &point) { m_pois.emplace_back(point); }
+
+std::vector<POI> Marker::get_points() { return m_pois; }
+
+POI::POI(int map_id, float x, float y, float z, const MarkerType &type)
+    : m_pos({map_id, x, y, z}), m_type(type)
 {
 }
 
-void Marker::add_point(Point3D point) { m_points.emplace_back(point); }
+POI::POI(Point3D pos, const MarkerType &type) : m_pos(pos), m_type(type) {}
 
-std::vector<Point3D> Marker::get_points() { return m_points; }
+Point3D POI::get_pos() { return m_pos; }

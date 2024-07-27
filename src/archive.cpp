@@ -1,5 +1,6 @@
 #include <archive.hpp>
 #include <iostream>
+#include <string>
 #include <vector>
 #include <zip.h>
 
@@ -18,8 +19,14 @@ ArchiveReader::ArchiveReader(const std::string &path)
         char *buffer = new char[stats.size];
         auto bytes_read = zip_fread(file, buffer, stats.size);
         zip_fclose(file);
-        m_files.emplace_back(std::string(buffer, bytes_read), name);
+        if (!strcmp(name, ".trl"))
+            m_trail_files.emplace_back(std::string(buffer, bytes_read), name);
+        else if (!strcmp(name, ".xml"))
+            m_marker_files.emplace_back(std::string(buffer, bytes_read), name);
+        else
+            m_files.emplace_back(std::string(buffer, bytes_read), name);
     }
+
     zip_close(taco);
 }
 

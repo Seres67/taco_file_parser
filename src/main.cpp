@@ -11,9 +11,13 @@
 void taco(char path[])
 {
     ArchiveReader ar(path);
-    auto files = ar.get_files();
+    auto files = ar.get_marker_files();
+    for (auto &marker_file : files) {
+        StringParser<Marker> marker_parser(marker_file);
+        marker_parser.parse_content();
+    }
     for (auto &file : files) {
-        if (file.file_name.find("trl") != std::string::npos) {
+        if (file.name.find("trl") != std::string::npos) {
             StringParser<Trail> sp(file);
             sp.parse_content();
             std::vector<Trail> data = sp.get_data();
@@ -24,15 +28,16 @@ void taco(char path[])
                               << std::format("{}", point.z) << ")" << std::endl;
                 }
             }
-        } else if (file.file_name.find("xml") != std::string::npos) {
+        } else if (file.name.find("xml") != std::string::npos) {
             StringParser<Marker> sp(file);
             sp.parse_content();
             std::vector<Marker> data = sp.get_data();
             for (Marker &d : data) {
-                for (Point3D &point : d.get_points()) {
-                    std::cout << "(" << std::format("{}", point.x) << "; "
-                              << std::format("{}", point.y) << "; "
-                              << std::format("{}", point.z) << ")" << std::endl;
+                for (POI &point : d.get_points()) {
+                    Point3D pos = point.get_pos();
+                    std::cout << "(" << std::format("{}", pos.x) << "; "
+                              << std::format("{}", pos.y) << "; "
+                              << std::format("{}", pos.z) << ")" << std::endl;
                 }
             }
         }
